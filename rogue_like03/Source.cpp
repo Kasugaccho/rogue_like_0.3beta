@@ -1,4 +1,4 @@
-#include "DxLib.h"
+ï»¿#include "DxLib.h"
 #include "GameMap.hpp"
 
 constexpr int X = 64;
@@ -23,9 +23,9 @@ void load(MainMap& d)
 	d.addCharTexture("ASCLL/2_0.png");
 	d.addCharTexture("ASCLL/2_1.png");
 	d.addCharTexture("ASCLL/0_0.png");
-	d.addTalkID("„‚Ìí“¬—Í‚Í530000‚Å‚·c\n‚Å‚·‚ªA‚à‚¿‚ë‚ñƒtƒ‹ƒpƒ[‚Å\n‚ ‚È‚½‚Æí‚¤‹C‚Í‚ ‚è‚Ü‚¹‚ñ‚©‚ç\n‚²S”z‚È‚­c", 0);
-	d.addTalkID("“–‚½‚è‘O‚¾c\n‚½‚Á‚½‚R•C‚ÌƒAƒŠ‚ª\n‹°—³‚ÉŸ‚Ä‚é‚Æv‚Á‚½‚Ì‚©H", 0);
-	d.addTalkID("ŠoŒå‚Í‚æ‚ë‚µ‚¢‚Å‚·‚ËB\n‚PŠÔŒo‚Á‚Ä‚àƒxƒW[ƒ^‚ğ\n‚±‚±‚É˜A‚ê‚Ä‚­‚é‚±‚Æ‚ª‚Å‚«‚È‚©‚Á‚½‚ç\n‚±‚Ì„‚ª‚ ‚È‚½‚ğE‚µ‚Ü‚·‚©‚çcI", 0);
+	d.addTalkID("ç§ã®æˆ¦é—˜åŠ›ã¯530000ã§ã™â€¦\nã§ã™ãŒã€ã‚‚ã¡ã‚ã‚“ãƒ•ãƒ«ãƒ‘ãƒ¯ãƒ¼ã§\nã‚ãªãŸã¨æˆ¦ã†æ°—ã¯ã‚ã‚Šã¾ã›ã‚“ã‹ã‚‰\nã”å¿ƒé…ãªãâ€¦", 0);
+	d.addTalkID("å½“ãŸã‚Šå‰ã â€¦\nãŸã£ãŸï¼“åŒ¹ã®ã‚¢ãƒªãŒ\næç«œã«å‹ã¦ã‚‹ã¨æ€ã£ãŸã®ã‹ï¼Ÿ", 0);
+	d.addTalkID("è¦šæ‚Ÿã¯ã‚ˆã‚ã—ã„ã§ã™ã­ã€‚\nï¼‘æ™‚é–“çµŒã£ã¦ã‚‚ãƒ™ã‚¸ãƒ¼ã‚¿ã‚’\nã“ã“ã«é€£ã‚Œã¦ãã‚‹ã“ã¨ãŒã§ããªã‹ã£ãŸã‚‰\nã“ã®ç§ãŒã‚ãªãŸã‚’æ®ºã—ã¾ã™ã‹ã‚‰â€¦ï¼", 0);
 
 	d.addEvent(0, EVENT_TYPE_ID_TALK, 0);
 	//d.addEvent(0, EVENT_TYPE_ID_TIME, 60);
@@ -78,16 +78,15 @@ void load(MainMap& d)
 }
 
 #if defined(__WINDOWS__)
-int WINAPI WinMain(HINSTANCE aaaa, HINSTANCE bbbb, LPSTR cccc, int dddd)
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #endif
 #if defined(__ANDROID__)
-int WINAPI WinMain(HINSTANCE a, HINSTANCE b, LPSTR c, int ddddd)
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #endif
 {
 	SetOutApplicationLogValidFlag(FALSE);
 
 #if defined(__WINDOWS__)
-	aaaa; bbbb; cccc; dddd;
 	SetMainWindowText("AS_CLL Rogue_Like");
 	ChangeWindowMode(TRUE);
 #endif
@@ -107,7 +106,7 @@ int WINAPI WinMain(HINSTANCE a, HINSTANCE b, LPSTR c, int ddddd)
 #if defined(__WINDOWS__)
 	SetGraphMode(X*XY_SIZE, Y*XY_SIZE, 32);
 	SetDrawScreen(DX_SCREEN_BACK);
-	//array<MapData,XY> m;
+	//std::array<MapData,XY> m;
 	MapData m[XY];
 	MainMap d(m, X, Y, X*XY_SIZE, Y*XY_SIZE);
 	//SetGraphMode(600, 900, 32);
@@ -115,7 +114,7 @@ int WINAPI WinMain(HINSTANCE a, HINSTANCE b, LPSTR c, int ddddd)
 	//
 	//MainMap d(m, X, Y, 600, 900);
 
-	//ƒ}ƒbƒvˆÚ“®
+	//ãƒãƒƒãƒ—ç§»å‹•
 	MapData m2[32 * 64];
 	d.addMap(64, 32, m2);
 #endif
@@ -124,7 +123,7 @@ int WINAPI WinMain(HINSTANCE a, HINSTANCE b, LPSTR c, int ddddd)
 
 	d.selectWindowInit();
 
-	//array<char[32], 8> add_str;
+	//std::array<char[32], 8> add_str;
 	//for (u8 j = 0; j < 8; j++) {
 	//	for (u8 i = 0; i < 31; i++) {
 	//		add_str[j][i] = 'a';
@@ -150,16 +149,16 @@ int WINAPI WinMain(HINSTANCE a, HINSTANCE b, LPSTR c, int ddddd)
 
 
 	while (loopGCH()) {
-		//“ü—Íæ“¾ŠÖ˜A
+		//å…¥åŠ›å–å¾—é–¢é€£
 		d.checkKey().checkButton().checkCrossKey().move();
-		//ü‰æŠÖ˜A
+		//ç·šç”»é–¢é€£
 		d.drawP().drawMiniMapX().drawButton().drawInventory().playTolkEvent().drawWindow().checkWindow();//
 
 		//d.drawSelectWindow();
 
 		d.eventTest();
 
-		//AndroidŠÖ˜A
+		//Androidé–¢é€£
 		//d.checkDisplayResolution();
 
 	}

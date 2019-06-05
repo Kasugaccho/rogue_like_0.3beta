@@ -1,9 +1,15 @@
-﻿//--------------------------------------------------
-//
-//	Game Map Library		-	by Kasugaccho
-//
-//--------------------------------------------------
-#pragma once
+﻿/*#######################################################################################
+	Copyright (c) 2018-2019 Kasugaccho
+	Copyright (c) 2018-2019 As Project
+	https://github.com/Kasugaccho/rogue_like_0.3beta
+	wanotaitei@gmail.com
+
+	Distributed under the Boost Software License, Version 1.0. (See accompanying
+	file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#######################################################################################*/
+#ifndef INCLUDED_ROGUE_LIKE_0_3_BETA_GAME_MAP_HPP
+#define INCLUDED_ROGUE_LIKE_0_3_BETA_GAME_MAP_HPP
+
 #include "DefaultGMAP.hpp"
 
 #if !defined(GMAP_INCLUDE)
@@ -18,10 +24,6 @@
 #include <ctime>
 #include <string>
 #include <cstdio>
-
-using std::string;
-using std::vector;
-using std::array;
 
 //ゲームマップライブラリ
 #if !defined(GMAP_NON_NAMESPACE)
@@ -241,7 +243,7 @@ namespace gmap {
 
 	struct Monster {
 		u16 texture_id = NULL_U16;
-		vector<bool> walk_id;
+		std::vector<bool> walk_id;
 	};
 
 	//mob(player,enemy)のデータ構造
@@ -270,7 +272,7 @@ namespace gmap {
 		u16 monster_id = NULL_U16;
 
 		//移動属性
-		vector<bool> walk_id;
+		std::vector<bool> walk_id;
 	};
 
 	struct Item {
@@ -372,11 +374,11 @@ namespace gmap {
 	struct DungeonMapData {
 
 		//マップの区域 [X終点 , Y終点 , X始点 , Y始点]
-		array<i32, 4> division_apex = {};
-		array<i32, 4> room_apex = {};
+		std::array<i32, 4> division_apex = {};
+		std::array<i32, 4> room_apex = {};
 
-		array<u8, 2> roadLine = {};
-		array<i32, 2> roadPos = {};
+		std::array<u8, 2> roadLine = {};
+		std::array<i32, 2> roadPos = {};
 		u8 room_id = 0;
 		bool room_entered_player = false;
 		i32 room_area = 0;
@@ -394,7 +396,7 @@ namespace gmap {
 	struct MapWindow {
 
 #if (defined(__WINDOWS__) || defined(__ANDROID__) || defined(GMAP_USE_D_LIB))
-		array<int, 9> id = { -1 };
+		std::array<int, 9> id = { -1 };
 #endif
 #if (defined(SIV3D_INCLUDED) || defined(GMAP_USE_S_LIB))
 		TEXTURE_VECTOR id;
@@ -473,7 +475,7 @@ namespace gmap {
 	};
 
 	struct SelectWindow {
-		array<char[32], 8> str = {};
+		std::array<char[32], 8> str = {};
 		i32 start_x = 0;
 		i32 start_y = 0;
 		i32 x_len = 0;
@@ -532,9 +534,9 @@ namespace gmap {
 
 	private:
 		//マップデータ管理
-		array<MapData *, UINT8_MAX + 1> mapData = {NULL};//マップアドレス
-		array<SubMap, UINT8_MAX + 1> subMap;//マップを配列で使うためのクラス
-		array<SubMapData, UINT8_MAX + 1> subMapData;//マップの情報管理
+		std::array<MapData *, UINT8_MAX + 1> mapData = {nullptr};//マップアドレス
+		std::array<SubMap, UINT8_MAX + 1> subMap;//マップを配列で使うためのクラス
+		std::array<SubMapData, UINT8_MAX + 1> subMapData;//マップの情報管理
 
 		u8 select_map_id = 0;
 		u8 map_move_total_count = 0;
@@ -554,9 +556,9 @@ namespace gmap {
 		u8 rand_8;
 		u32 rand_32;
 
-		vector<Mob> mob;
-		vector<Item> item;
-		array<Monster, UINT16_MAX> monster;
+		std::vector<Mob> mob;
+		std::vector<Item> item;
+		std::array<Monster, UINT16_MAX> monster;
 
 		u8 key_check = MOB_NON_WALK_ID;
 
@@ -567,17 +569,17 @@ namespace gmap {
 		i32 check_display_resolution_time = 0;
 
 		//テクスチャ系
-		vector<MapWindow> windowTexture;//ウィンドウ
+		std::vector<MapWindow> windowTexture;//ウィンドウ
 		TEXTURE_VECTOR itemTexture;//アイテム
 		TEXTURE_VECTOR floorTexture;//床
 		TEXTURE_VECTOR fieldTexture;//地形
 		TEXTURE_VECTOR uiTexture;//UI
 		TEXTURE_VECTOR charTexture;//キャラ立ち絵
-		vector<MapChip> mapChip;//マップチップ
-		vector<MobPic> mobPicture;//キャラチップ
-		vector<ButtonMap> buttonMap;//ボタン
+		std::vector<MapChip> mapChip;//マップチップ
+		std::vector<MobPic> mobPicture;//キャラチップ
+		std::vector<ButtonMap> buttonMap;//ボタン
 
-		vector<EventData> eventData;
+		std::vector<EventData> eventData;
 		u16 select_eventData = 0;//現在選んでいるイベント
 		u16 event_count = 0;
 		bool on_eventData = false;
@@ -585,7 +587,7 @@ namespace gmap {
 		u16 event_id = NULL_U16;
 		u16 select_event_id = 0;
 
-		vector<TalkData> talkData;
+		std::vector<TalkData> talkData;
 		u16 select_talkData = NULL_U16;
 		i32 time_talkData = 0;
 		u8 string_talkData = 0;
@@ -595,16 +597,16 @@ namespace gmap {
 		
 		//ダンジョン系
 		DungeonData dngData;
-		array<DungeonMapData, UINT8_MAX + 1> dngList;
+		std::array<DungeonMapData, UINT8_MAX + 1> dngList;
 		u8 dngList_size = 0;
 
-		array<DungeonItem, UINT16_MAX> dngItem;
-		array<DungeonField, UINT16_MAX> dngField;
+		std::array<DungeonItem, UINT16_MAX> dngItem;
+		std::array<DungeonField, UINT16_MAX> dngField;
 
 		u16 inventory_max = 5;
 		u16 select_inventory = 0;
 
-		vector<Inventory> inventory;
+		std::vector<Inventory> inventory;
 
 		i32 itembox_ui = 0;
 
@@ -676,13 +678,13 @@ namespace gmap {
 		MapWindowData windowData;
 
 		//ログ系
-		array<MapLogData, UINT8_MAX + 1> logData;
+		std::array<MapLogData, UINT8_MAX + 1> logData;
 		u8 logData_size = 0;
 
 		//音声データ
-		array<string, UINT8_MAX + 1> sound_name;
-		array<int, 4> sound_id = { -1 };
-		array<int, UINT8_MAX + 1> se_id = { -1 };
+		std::array<std::string, UINT8_MAX + 1> sound_name;
+		std::array<int, 4> sound_id = { -1 };
+		std::array<int, UINT8_MAX + 1> se_id = { -1 };
 
 		i32 touch_count = 0;
 		bool touch_click = false;
@@ -881,7 +883,7 @@ namespace gmap {
 
 		//選択ウィンドウ系
 		MainMap& selectWindowInit();
-		MainMap& selectWindowAdd(array<char[32], 8>& add_str);
+		MainMap& selectWindowAdd(std::array<char[32], 8>& add_str);
 		MainMap& drawSelectWindow();
 
 		//ログ系
@@ -917,7 +919,7 @@ namespace gmap {
 		return *this;
 	}
 
-	inline MainMap& MainMap::selectWindowAdd(array<char[32], 8>& add_str)
+	inline MainMap& MainMap::selectWindowAdd(std::array<char[32], 8>& add_str)
 	{
 		for (u8 j = 0; j < 8; j++) {
 			for (u8 i = 0; i < 32; i++) {
@@ -1074,7 +1076,7 @@ namespace gmap {
 
 	inline MainMap& MainMap::addSound(const u8 add_sound_id, const char* add_sound_name)
 	{
-		sound_name[add_sound_id] = string(add_sound_name);
+		sound_name[add_sound_id] = std::string(add_sound_name);
 		return *this;
 	}
 
@@ -1218,7 +1220,7 @@ namespace gmap {
 #if defined(__ANDROID__) //Android専用
 		char FilePath[256];
 		GetExternalDataPath(FilePath, sizeof(FilePath));
-		string fp_name = string(FilePath) + "/option.txt";
+		std::string fp_name = std::string(FilePath) + "/option.txt";
 
 		//printfDx(" save:%s file:%s", FilePath, fp_name.c_str());
 
@@ -1236,7 +1238,7 @@ namespace gmap {
 		unsigned char file_use_square = 0;
 		unsigned char file_ground_picture = 0;
 #if (defined(SIV3D_TARGET_MACOS) || defined(SIV3D_TARGET_LINUX) || defined(__ANDROID__)) //AndroidとMacとLinux専用
-		if (cfp_fp != NULL) {
+		if (cfp_fp != nullptr) {
 			fscanf(cfp_fp, "%hhu", &file_on_minimap);
 			fscanf(cfp_fp, "%hhu", &file_use_cross_key);
 			fscanf(cfp_fp, "%hhu", &file_use_square);
@@ -1272,18 +1274,18 @@ namespace gmap {
 		char FilePath[256];
 		GetExternalDataPath(FilePath, sizeof(FilePath));
 
-		string fp_file_path = string(FilePath);
-		string fp_name = fp_file_path + "/option.txt";
+		std::string fp_file_path = std::string(FilePath);
+		std::string fp_name = fp_file_path + "/option.txt";
 
 		//printfDx(" save:%s file:%s", FilePath, fp_name.c_str());
 
 		cfp_fp = fopen(fp_name.c_str(), "w"); //持ち物セーブ
-		if (cfp_fp != NULL) {
+		if (cfp_fp != nullptr) {
 #else
 
 #if (defined(SIV3D_TARGET_MACOS) || defined(SIV3D_TARGET_LINUX)) //MacとLinux専用
 		cfp_fp = fopen("Save\\option.txt", "w"); //持ち物セーブ
-		if (cfp_fp != NULL) {
+		if (cfp_fp != nullptr) {
 #else
 		errno_t cfp_error;
 		cfp_error = fopen_s(&cfp_fp, "Save\\option.txt", "w"); //持ち物セーブ
@@ -1683,7 +1685,7 @@ namespace gmap {
 		//			newKey.use_string = true;
 		//			newKey.key_string = new_key_string;
 		//#if (defined(__WINDOWS__) || defined(__ANDROID__) || defined(GMAP_USE_D_LIB))
-		//			newKey.string_handle = CreateFontToHandle(NULL, newKey.end_y - newKey.start_y, 9, DX_FONTTYPE_ANTIALIASING_EDGE_8X8);
+		//			newKey.string_handle = CreateFontToHandle(nullptr, newKey.end_y - newKey.start_y, 9, DX_FONTTYPE_ANTIALIASING_EDGE_8X8);
 		//#endif
 		//		}
 
@@ -1726,7 +1728,7 @@ namespace gmap {
 		//			newKey.use_string = true;
 		//			newKey.key_string = new_key_string;
 		//#if (defined(__WINDOWS__) || defined(__ANDROID__) || defined(GMAP_USE_D_LIB))
-		//			newKey.string_handle = CreateFontToHandle(NULL, newKey.end_y - newKey.start_y, 9, DX_FONTTYPE_ANTIALIASING_EDGE_8X8);
+		//			newKey.string_handle = CreateFontToHandle(nullptr, newKey.end_y - newKey.start_y, 9, DX_FONTTYPE_ANTIALIASING_EDGE_8X8);
 		//#endif
 		//		}
 
@@ -1874,7 +1876,7 @@ namespace gmap {
 	inline void SubMap::resize(MapData *resize_data, const u32& xx, const u32& yy)
 	{
 #if defined(__ANDROID__) //Android専用
-		if (resize_data != NULL)mapData = resize_data;
+		if (resize_data != nullptr)mapData = resize_data;
 #else
 		if (resize_data != nullptr)mapData = resize_data;
 #endif
@@ -2030,7 +2032,7 @@ namespace gmap {
 	inline MainMap& MainMap::resize(MapData *resize_data, const u32 xx, const u32 yy)
 	{
 #if defined(__ANDROID__) //Android専用
-		if (resize_data != NULL)mapData[select_map_id] = resize_data;
+		if (resize_data != nullptr)mapData[select_map_id] = resize_data;
 #else
 		if (resize_data != nullptr)mapData[select_map_id] = resize_data;
 #endif
@@ -2830,7 +2832,7 @@ namespace gmap {
 #if (defined(__WINDOWS__) || defined(__ANDROID__) || defined(GMAP_USE_D_LIB))
 		if (click_key_g[KEY_ID_LALT]) {
 #if defined(__ANDROID__) //Android専用
-			//AndroidNotification("title", "SubTitle", -1, TRUE, TRUE, 0, NULL, 0, 0, 0, 0);
+			//AndroidNotification("title", "SubTitle", -1, TRUE, TRUE, 0, nullptr, 0, 0, 0, 0);
 			this->androidString();
 			//printfDx("%s", InputString);
 #endif
@@ -2843,7 +2845,7 @@ namespace gmap {
 	{
 #if defined(__ANDROID__) //Android専用
 		if (click_key_g[KEY_ID_RALT]) {
-			AndroidJumpURL("http://twitter.com", NULL, NULL);
+			AndroidJumpURL("http://twitter.com", nullptr, nullptr);
 		}
 #endif
 		return *this;
@@ -3464,7 +3466,7 @@ namespace gmap {
 		if (map_move_total_count == UINT8_MAX) return *this;
 
 #if defined(__ANDROID__) //Android専用
-		if (add_map_data != NULL)mapData[map_move_total_count] = add_map_data;
+		if (add_map_data != nullptr)mapData[map_move_total_count] = add_map_data;
 #else
 		if (add_map_data != nullptr)mapData[map_move_total_count] = add_map_data;
 #endif
@@ -3521,7 +3523,7 @@ namespace gmap {
 		inventory_font = createFontGCH("Playbill", map_screen_x / 32);
 
 		//乱数SEED作成
-		time_t a = time(NULL), ff = UINT8_MAX;
+		time_t a = time(nullptr), ff = UINT8_MAX;
 		rand_8 = u8(a & ff);
 		if (!rand_8) rand_8++;
 
@@ -3603,12 +3605,12 @@ namespace gmap {
 
 
 		//}
-		//			//dngList vector初期化
+		//			//dngList std::vector初期化
 		//			dngList.clear();
 		//#if !defined(__ANDROID__) //Android以外専用
 		//			dngList.shrink_to_fit();
 		//#endif
-		//mob vector初期化
+		//mob std::vector初期化
 		mob_player_id = NULL_U16;
 		mob.clear();
 #if !defined(__ANDROID__) //Android以外専用
@@ -4335,7 +4337,7 @@ namespace gmap {
 			return *this;
 		}
 
-		vector<int> add_before_mob;
+		std::vector<int> add_before_mob;
 		add_before_mob.resize(map_chip_count * 20);
 
 		loadDivisionGraphGCH(name, add_before_mob.data(), 2 * map_chip_count, 10, map_chip_size, map_chip_size);
@@ -4903,7 +4905,7 @@ namespace gmap {
 		{
 #if (defined(__WINDOWS__) || defined(__ANDROID__) || defined(GMAP_USE_D_LIB))
 			if (i == touch_num) mousePosGCH(&button_x, &button_y);
-			else GetTouchInput(i, &button_x, &button_y, NULL, NULL);
+			else GetTouchInput(i, &button_x, &button_y, nullptr, nullptr);
 #else
 			if (i == touch_num) mousePosGCH(&button_x, &button_y);
 #endif
@@ -4980,7 +4982,7 @@ namespace gmap {
 		NativeActivity = GetNativeActivity();
 
 		{
-			if (NativeActivity->vm->AttachCurrentThreadAsDaemon(&env, NULL) != JNI_OK) {
+			if (NativeActivity->vm->AttachCurrentThreadAsDaemon(&env, nullptr) != JNI_OK) {
 				return *this;
 			}
 			jclass jclass_as_cll = env->GetObjectClass(NativeActivity->clazz);
@@ -4996,7 +4998,7 @@ namespace gmap {
 		{
 			if (!InputEnd)
 			{
-				if (NativeActivity->vm->AttachCurrentThreadAsDaemon(&env, NULL) != JNI_OK) return *this;
+				if (NativeActivity->vm->AttachCurrentThreadAsDaemon(&env, nullptr) != JNI_OK) return *this;
 
 				jclass jclass_as_cll = env->GetObjectClass(NativeActivity->clazz);
 				jfieldID jfieldID_InputEnd = env->GetFieldID(jclass_as_cll, "InputEnd", "I");
@@ -5005,7 +5007,7 @@ namespace gmap {
 				if (InputEnd == 1) {
 					jfieldID jfieldID_InputString = env->GetFieldID(jclass_as_cll, "InputString", "Ljava/lang/String;");
 					jstring jstring_InputString = (jstring)env->GetObjectField(NativeActivity->clazz, jfieldID_InputString);
-					const char *chars_InputString = env->GetStringUTFChars(jstring_InputString, NULL);
+					const char *chars_InputString = env->GetStringUTFChars(jstring_InputString, nullptr);
 					strcpy(InputString, chars_InputString);
 					env->ReleaseStringUTFChars(jstring_InputString, chars_InputString);
 					env->DeleteLocalRef(jstring_InputString);
@@ -5061,3 +5063,5 @@ using namespace gmap;
 #endif
 
 #endif
+
+#endif //Included RogueLike 0.3 Beta

@@ -1,18 +1,19 @@
-﻿//--------------------------------------------------
-//
-//	Game Map Library		-	by Kasugaccho
-//
-//--------------------------------------------------
-#pragma once
+﻿/*#######################################################################################
+	Copyright (c) 2018-2019 Kasugaccho
+	Copyright (c) 2018-2019 As Project
+	https://github.com/Kasugaccho/rogue_like_0.3beta
+	wanotaitei@gmail.com
+
+	Distributed under the Boost Software License, Version 1.0. (See accompanying
+	file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+#######################################################################################*/
+#ifndef INCLUDED_ROGUE_LIKE_0_3_BETA_DEFAULT_GMAP_HPP
+#define INCLUDED_ROGUE_LIKE_0_3_BETA_DEFAULT_GMAP_HPP
 
 #include <cstdint>
 #include <string>
 #include <vector>
 #include <array>
-
-using std::string;
-using std::vector;
-using std::array;
 
 //変数型
 
@@ -202,7 +203,7 @@ u8 keyconfig_g[UINT8_MAX + 1] = {};
 #if (defined(__WINDOWS__) || defined(__ANDROID__) || defined(GMAP_USE_D_LIB))
 
 using TEXTURE_VECTOR_TYPE = int;
-using TEXTURE_VECTOR = vector<int>;
+using TEXTURE_VECTOR = std::vector<int>;
 
 using FONT_TYPE = int;
 constexpr int FONT_INIT = -1;
@@ -210,7 +211,7 @@ using TEXTURE_TYPE = int;
 constexpr int TEXTURE_INIT = -1;
 
 //臨時
-inline int loadDivisionGraphGCH(const char* name, array<int, 9>& handle, const i32 x_count, const i32 y_count, const i32 x_len, const i32 y_len)
+inline int loadDivisionGraphGCH(const char* name, std::array<int, 9>& handle, const i32 x_count, const i32 y_count, const i32 x_len, const i32 y_len)
 {
 	return LoadDivGraph(name, x_count*y_count, x_count, y_count, x_len, y_len, handle.data());
 }
@@ -228,7 +229,7 @@ inline i32 mouseClickGCH()
 	else return 0;
 }
 
-inline int loadDivisionGraphGCH(const char* name, vector<int>& handle, const i32 x_count, const i32 y_count, const i32 x_len, const i32 y_len)
+inline int loadDivisionGraphGCH(const char* name, std::vector<int>& handle, const i32 x_count, const i32 y_count, const i32 x_len, const i32 y_len)
 {
 	return LoadDivGraph(name, x_count*y_count, x_count, y_count, x_len, y_len, handle.data());
 }
@@ -414,12 +415,12 @@ inline i32 mouseClickGCH()
 	else return 0;
 }
 
-template<typename... Rest> string printString(const char *FormatString, const Rest&... rest)
+template<typename... Rest> std::string printString(const char *FormatString, const Rest&... rest)
 {
 	constexpr i32 PRINT_STRING_MAX = 1024;
 	char snString[PRINT_STRING_MAX];
 	snprintf(snString, sizeof(snString), FormatString, rest...);
-	return string(snString);
+	return std::string(snString);
 }
 
 template<typename... Rest> void printfGCH(const char *format_string, const Rest&... rest)
@@ -441,7 +442,7 @@ bool loopGCH()
 
 Font createFontGCH(const char* font_name, i32 font_size)
 {
-	string string_name = string(font_name);
+	std::string string_name = std::string(font_name);
 	Font newFont(font_size);//, Typeface::Heavy, Unicode::UTF8ToUTF32(string_name)
 	return newFont;
 }
@@ -465,14 +466,14 @@ Array<TextureRegion> LoadDiv(const FilePath& path, int a, int b, const Size& siz
 
 i32 loadDivisionGraphGCH(const char* name, Array<TextureRegion>& handle, i32 x_count, i32 y_count, i32 x_len, i32 y_len)
 {
-	string string_name = string(name);
+	std::string string_name = std::string(name);
 	handle = LoadDiv(Unicode::UTF8ToUTF32(string_name), x_count, y_count, Size(x_len, y_len));
 	return 0;
 }
 
 Texture loadGraphGCH(const char* name)
 {
-	string string_name = string(name);
+	std::string string_name = std::string(name);
 #if defined(SIV3D_TARGET_MACOS)
 	Texture newTexture(Resource(Unicode::UTF8ToUTF32(string_name)));
 #else
@@ -723,7 +724,7 @@ inline void readBinaryFile(const char* save_name, const char* file_name, void* r
 {
 	FILE  *cfp_fp;
 	errno_t cfp_error;
-	string read_file_name = string(save_name) + "\\" + string(file_name);
+	std::string read_file_name = std::string(save_name) + "\\" + std::string(file_name);
 
 	cfp_error = fopen_s(&cfp_fp, read_file_name.c_str(), "rb");
 	if (!cfp_error) {
@@ -737,7 +738,7 @@ inline void writeBinaryFile(const char* save_name, const char* file_name, void* 
 {
 	FILE  *cfp_fp;
 	errno_t cfp_error;
-	string read_file_name = string(save_name) + "\\" + string(file_name);
+	std::string read_file_name = std::string(save_name) + "\\" + std::string(file_name);
 
 	cfp_error = fopen_s(&cfp_fp, read_file_name.c_str(), "wb");
 	if (!cfp_error) {
@@ -752,10 +753,10 @@ inline void writeBinaryFile(const char* save_name, const char* file_name, void* 
 inline void readBinaryFile(const char* save_name, const char* file_name, void* read_buf, size_t read_size, size_t read_nmemb)
 {
 	FILE  *cfp_fp;
-	string read_file_name = string(save_name) + "\\" + string(file_name);
+	std::string read_file_name = std::string(save_name) + "\\" + std::string(file_name);
 
 	cfp_fp = fopen(read_file_name.c_str(), "rb");
-	if (cfp_fp != NULL) {
+	if (cfp_fp != nullptr) {
 		fread(read_buf, read_size, read_nmemb, cfp_fp);
 		fclose(cfp_fp);
 	}
@@ -765,10 +766,10 @@ inline void readBinaryFile(const char* save_name, const char* file_name, void* r
 inline void writeBinaryFile(const char* save_name, const char* file_name, void* read_buf, size_t read_size, size_t read_nmemb)
 {
 	FILE  *cfp_fp;
-	string read_file_name = string(save_name) + "\\" + string(file_name);
+	std::string read_file_name = std::string(save_name) + "\\" + std::string(file_name);
 
 	cfp_fp = fopen(read_file_name.c_str(), "wb");
-	if (cfp_fp != NULL) {
+	if (cfp_fp != nullptr) {
 		fwrite(read_buf, read_size, read_nmemb, cfp_fp);
 		fclose(cfp_fp);
 	}
@@ -783,10 +784,10 @@ inline void readBinaryFile(const char* save_name, const char* file_name, void* r
 	char FilePath[256];
 	GetExternalDataPath(FilePath, sizeof(FilePath));
 
-	string fp_name = string(FilePath) + "\\" + string(file_name);
+	std::string fp_name = std::string(FilePath) + "\\" + std::string(file_name);
 
 	cfp_fp = fopen(fp_name.c_str(), "rb");
-	if (cfp_fp != NULL) {
+	if (cfp_fp != nullptr) {
 		fread(read_buf, read_size, read_nmemb, cfp_fp);
 		fclose(cfp_fp);
 	}
@@ -799,13 +800,15 @@ inline void writeBinaryFile(const char* save_name, const char* file_name, void* 
 	char FilePath[256];
 	GetExternalDataPath(FilePath, sizeof(FilePath));
 
-	string fp_name = string(FilePath) + "\\" + string(file_name);
+	std::string fp_name = std::string(FilePath) + "\\" + std::string(file_name);
 
 	cfp_fp = fopen(fp_name.c_str(), "wb");
-	if (cfp_fp != NULL) {
+	if (cfp_fp != nullptr) {
 		fwrite(read_buf, read_size, read_nmemb, cfp_fp);
 		fclose(cfp_fp);
 	}
 	return;
 }
 #endif
+
+#endif //Included RogueLike 0.3 Beta
