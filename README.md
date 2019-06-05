@@ -1,10 +1,10 @@
-# rogue_like_0.3beta [![BSL-1.0](https://img.shields.io/badge/license-BSL--1.0-blue.svg)](https://github.com/Kasugaccho/DungeonTemplateLibrary/blob/master/LICENSE_1_0.txt)
+# rogue_like_0.3beta [![BSL-1.0](https://img.shields.io/badge/license-BSL--1.0-blue.svg)](https://github.com/Kasugaccho/rogue_like_0.3beta/blob/master/LICENSE)
 
 ## Overview
 
 当リポジトリは2018年03月25日に開発が停止されたライブラリにライセンスを付加し、他者が使用しやすいように改良したものである。
 
-## [License](https://github.com/Kasugaccho/DungeonTemplateLibrary/blob/master/LICENSE_1_0.txt)
+## [License](https://github.com/Kasugaccho/rogue_like_0.3beta/blob/master/LICENSE)
 
 Copyright (c) 2017-2019 Kasugaccho.
 Copyright (c) 2018-2019 As Project.
